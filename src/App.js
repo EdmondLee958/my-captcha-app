@@ -1,25 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function App() {
+  const [captchaValue, setCaptchaValue] = useState(null);
+
+  const handleCaptchaChange = (value) => {
+    console.log("Captcha value:", value);
+    setCaptchaValue(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (captchaValue) {
+      // Submit form or execute desired action
+      alert("Captcha verified!");
+    } else {
+      alert("Please complete the CAPTCHA");
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>React CAPTCHA Example</h1>
+      <form onSubmit={handleSubmit}>
+        <ReCAPTCHA
+          sitekey="6LduZSgqAAAAAB1R3RtfAmSGUFKSc-xsRrRtSWQL"
+          onChange={handleCaptchaChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 }
 
 export default App;
+
